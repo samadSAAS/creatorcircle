@@ -17,15 +17,16 @@ exports.handler = async (event) => {
       }
     );
     const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI';
     return {
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
       body: JSON.stringify({ content: [{ text }] })
     };
   } catch (err) {
     return {
       statusCode: 500,
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: err.message })
     };
   }
